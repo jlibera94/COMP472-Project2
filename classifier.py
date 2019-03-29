@@ -12,3 +12,11 @@ import re
 import matplotlib
 
 
+f=open("test/testfile.txt", "r")print(f.read())
+
+#loop through all the files 
+#print-filter through relevant words
+
+#naive bayes
+
+##condtion for stopwords 
