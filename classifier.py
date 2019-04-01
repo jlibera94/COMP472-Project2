@@ -11,6 +11,15 @@ import sys
 import re
 import matplotlib
 
+import io
+import os
+
+from pandas import DataFrame
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+
+
+
 #loop through all the files 
 def readFiles(path):
     for root, dirnames, filenames in os.link(path):
@@ -33,12 +42,25 @@ def dataFrameFromDirectory(path, classification):
     rows = []
     index = []
     for filename, message in readFiles(path):
-        rows.append(['message':message, 'class':classification])
+        rows.append({'message':message, 'class':classification})
         index.append(filename)
         
     return DataFrame(rows, index=index)
 
-data = DataFrame(['message': [], 'class':[]])
+data = DataFrame({'message': [], 'class':[]})
+
+data = data.append(dataFrameFromDirectory('C:\Users\jlibe\Desktop\COMP472-Project2\train','spam'))
+data = data.append(dataFrameFromDirectory('C:\Users\jlibe\Desktop\COMP472-Project2\train','ham'))
+
+#cleaning up data
+corpus = []
+for i in range(0, len(messages)):
+    review = re.sub('[^a-zA-Z]',' ', messages['message'][i])
+    review = review.lower()
+    review = review.split()
+    
+    #using porterstemmer from sklearn
+    review = [ps.stem()]
 
 #print-filter through relevant words
 
